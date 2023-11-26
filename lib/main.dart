@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:simple_todo_flutter_app/todo_model.dart';
 
@@ -82,8 +84,8 @@ class _TodoPageState extends State<TodoPage> {
                 setState(() {
                   todoList.add(
                     Todo(
-                      title: "Item ${todoList.length + 1}",
-                      description: '',
+                      title: titleController.text,
+                      description: descriptionController.text,
                       isDone: false,
                     ),
                   );
@@ -101,9 +103,33 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   void deleteTodo(int index) {
-    setState(() {
-      todoList[index] = Todo(title: '', description: '', isDone: false);
-    });
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Delete Todo"),
+            content: const Text("Are you sure you want to delete this todo?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    print(todoList.removeAt(index));
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text("Delete"),
+              ),
+            ],
+          );
+        });
   }
 
   @override
