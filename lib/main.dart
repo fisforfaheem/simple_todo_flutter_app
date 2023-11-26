@@ -114,15 +114,20 @@ class _TodoPageState extends State<TodoPage> {
           "TODO APP ",
         ),
         actions: [
-          if (todoList.where((element) => element.isDone).isNotEmpty)
+          // Check if there are any completed tasks in the todoList
+          if (todoList.any((element) => element.isDone))
+            // If there are completed tasks, add a TextButton to the actions
             TextButton(
+              // When the button is pressed, toggle the 'showDone' state
               onPressed: () {
                 setState(() {
                   showDone = !showDone;
                 });
               },
-              child:
-                  showDone ? const Text('Hide Done') : const Text('Show Done'),
+              // The button's label changes based on the 'showDone' state
+              child: Text(
+                showDone ? 'Hide Done' : 'Show Done',
+              ),
             ),
         ],
       ),
@@ -130,6 +135,7 @@ class _TodoPageState extends State<TodoPage> {
         child: ListView.builder(
           itemCount: todoList.length,
           itemBuilder: (context, index) {
+            //check if there is any done todo
             if (todoList[index].isDone && !showDone) return const SizedBox();
             return ListTile(
               title: Text(todoList[index].title),
