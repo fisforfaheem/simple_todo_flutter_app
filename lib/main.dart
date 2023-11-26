@@ -121,7 +121,7 @@ class _TodoPageState extends State<TodoPage> {
               TextButton(
                 onPressed: () {
                   setState(() {
-                    print(todoList.removeAt(index));
+                    print('Removed:${todoList.removeAt(index).title}');
                     Navigator.pop(context);
                   });
                 },
